@@ -11,7 +11,6 @@ export default class LercDecoder extends BaseDecoder {
     super();
 
     this.planarConfiguration = typeof fileDirectory.PlanarConfiguration !== 'undefined' ? fileDirectory.PlanarConfiguration : 1;
-    this.samplesPerPixel = typeof fileDirectory.SamplesPerPixel !== 'undefined' ? fileDirectory.SamplesPerPixel : 1;
 
     this.addCompression = fileDirectory.LercParameters[LercParameters.AddCompression];
   }
