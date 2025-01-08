@@ -5,7 +5,7 @@ export const zstd = new ZSTDDecoder();
 
 export default class ZstdDecoder extends BaseDecoder {
   decodeBlock(buffer) {
-    buffer = zstd.decode(new Uint8Array(buffer)).buffer;  // eslint-disable-line no-param-reassign, prefer-destructuring
+    buffer = zstd.decode(new Uint8Array(buffer)).buffer; // eslint-disable-line no-param-reassign, prefer-destructuring
     return buffer;
   }
 }
