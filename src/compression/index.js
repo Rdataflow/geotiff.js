@@ -34,7 +34,7 @@ addDecoder(34887, () => import('./lerc.js')
 );
 addDecoder(50000, () => import('./zstd.js')
   .then(async (m) => {
-    await m.zstd.init();
+    await m.zstd2.init();
     return m;
   })
   .then((m) => m.default),
