@@ -25,9 +25,9 @@ class Pool {
    * import { addDecoder, getDecoder } from 'geotiff';
    * addDecoder(5, () => import ('./my-custom-lzw').then((m) => m.default));
    * self.addEventListener('message', async (e) => {
-   *   const { id, fileDirectory, buffer } = e.data;
+   *   const { id, fileDirectory, buffer, uncompressedByteSize } = e.data;
    *   const decoder = await getDecoder(fileDirectory);
-   *   const decoded = await decoder.decode(fileDirectory, buffer);
+   *   const decoded = await decoder.decode(fileDirectory, buffer, uncompressedByteSize);
    *   self.postMessage({ decoded, id }, [decoded]);
    * });
    * ```
@@ -65,12 +65,12 @@ class Pool {
    * @param {ArrayBuffer} buffer the array buffer of bytes to decode.
    * @returns {Promise<ArrayBuffer>} the decoded result as a `Promise`
    */
-  async decode(fileDirectory, buffer) {
+  async decode(fileDirectory, buffer, uncompressedByteSize) {
     if (this._awaitingDecoder) {
       await this._awaitingDecoder;
     }
     return this.size === 0
-      ? getDecoder(fileDirectory).then((decoder) => decoder.decode(fileDirectory, buffer))
+      ? getDecoder(fileDirectory).then((decoder) => decoder.decode(fileDirectory, buffer, uncompressedByteSize))
       : new Promise((resolve) => {
         const worker = this.workers.find((candidate) => candidate.idle)
           || this.workers[Math.floor(Math.random() * this.size)];
@@ -84,7 +84,7 @@ class Pool {
           }
         };
         worker.worker.addEventListener('message', onMessage);
-        worker.worker.postMessage({ fileDirectory, buffer, id }, [buffer]);
+        worker.worker.postMessage({ fileDirectory, buffer, uncompressedByteSize, id }, [buffer]);
       });
   }
 

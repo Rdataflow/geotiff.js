@@ -388,9 +388,10 @@ class GeoTIFFImage {
     if (tiles === null || !tiles[index]) {
     // resolve each request by potentially applying array normalization
       request = (async () => {
-        let data = await poolOrDecoder.decode(this.fileDirectory, slice);
         const sampleFormat = this.getSampleFormat();
         const bitsPerSample = this.getBitsPerSample();
+        const uncompressedByteCount = Math.ceil(sampleFormat * bitsPerSample * this.getTileWidth() * this.getTileHeight()) * 2;
+        let data = await poolOrDecoder.decode(this.fileDirectory, slice, uncompressedByteCount);
         if (needsNormalization(sampleFormat, bitsPerSample)) {
           data = normalizeArray(
             data,
