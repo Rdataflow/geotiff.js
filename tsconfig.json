@@ -11,7 +11,7 @@
     "strict": false,
     "strictNullChecks": true,
     "moduleResolution": "node",
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "inlineSources": false,
     "downlevelIteration": true
   },

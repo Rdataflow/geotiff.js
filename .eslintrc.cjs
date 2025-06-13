@@ -39,7 +39,6 @@ module.exports = {
     'max-classes-per-file': 0,
     'max-len': ['error', { code: 130 }],
     'import/prefer-default-export': 0,
-    'import/extensions': ['error', 'always'],
     'prefer-default-export': 0,
     'func-names': 0,
     'arrow-body-style': 0,
@@ -50,5 +49,17 @@ module.exports = {
     curly: ['error', 'all'],
     'brace-style': ['error', '1tbs', { allowSingleLine: false }],
     'no-else-return': 0,
+    'import/extensions': [
+      'off',
+      'ignorePackages',
+      {
+        js: 'never',
+        mjs: 'never',
+        ts: 'never',
+      },
+    ],
+    'import/no-unresolved': [
+      'off',
+    ],
   },
 };
